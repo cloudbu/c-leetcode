@@ -23,3 +23,23 @@
 		   [3,4]]
 	解释: 无法重塑，输出原来的数组
 */
+
+int** matrixReshape(int** nums, int numsRowSize, int numsColSize, int r, int c, int** columnSizes, int* returnSize) {
+    if (r * c != numsRowSize * numsColSize) {
+        r = numsRowSize;
+        c = numsColSize;
+    }
+
+    *returnSize = r;
+    int** result = (int**) malloc(r * sizeof(int*));
+    *columnSizes = (int*) malloc(r * sizeof(int));
+    for (int i = 0; i < r; ++i) {
+        result[i] = (int*) malloc(c * sizeof(int));
+        (*columnSizes)[i] = c;
+    }
+    
+    for (int i = 0; i < numsRowSize * numsColSize; ++i)
+        result[i/c][i%c] = nums[i/numsColSize][i%numsColSize];
+
+    return result;  
+}
